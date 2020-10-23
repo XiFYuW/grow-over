@@ -1,0 +1,22 @@
+spring:
+  mvc:
+    dispatch-options-request: true
+  profiles:
+    active: dev
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    serialization:
+        write-dates-as-timestamps: false
+
+mybatis-plus:
+  mapper-locations: classpath:mappers/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    default-fetch-size: 100
+    default-statement-timeout: 30
+
+logging:
+  file:
+    name: grow.log
+    path: grow

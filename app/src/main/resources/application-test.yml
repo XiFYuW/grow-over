@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.0.39:3306/grow?characterEncoding=utf8&characterEncodingracterSetResults=UTF-8&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true&autoReconnect=true&allowMultiQueries=true
+    username: root
+    password: V3cyzBGUHQXe
+    type: com.alibaba.druid.pool.DruidDataSource
+
+
+  redis:
+    timeout: 7000ms
+    jedis:
+      pool:
+        max-active: 1000
+        max-wait: -1ms
+        max-idle: 10
+        min-idle: 5
+    host: 118.31.76.48
+    port: 6379
+    password: suibianda123
+logging:
+  file:
+    name: grow.log
+    path: grow
