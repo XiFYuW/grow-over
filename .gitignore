@@ -9,3 +9,5 @@ out
 gen
 *.log
 *.gz
+pay/src/main/java/com/grow/pay/ali/AliFactoryConfig.java
+pay/src/main/java/com/grow/pay/wx/WxFactoryConfig.java
