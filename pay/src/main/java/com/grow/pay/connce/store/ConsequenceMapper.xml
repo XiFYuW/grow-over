@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.grow.pay.connce.store.ConsequenceMapper">
+    <resultMap id="BaseResultMap" type="com.grow.pay.connce.store.ConsequencePay">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR"/>
+        <result column="is_consequence" property="isConsequence" jdbcType="INTEGER"/>
+        <result column="pay_way" property="payWay" jdbcType="INTEGER"/>
+        <result column="is_perform" property="isPerform" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, order_no, is_consequence, pay_way, is_perform, create_time, update_time
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select <include refid="Base_Column_List"/> from consequence where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <insert id="insertSelective" parameterType="com.grow.pay.connce.store.ConsequencePay">
+        insert into consequence
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="orderNo != null">
+                order_no,
+            </if>
+            <if test="isConsequence != null">
+                is_consequence,
+            </if>
+            <if test="payWay != null">
+                pay_way,
+            </if>
+            <if test="isPerform != null">
+                is_perform,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="orderNo != null">
+                #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="isConsequence != null">
+                #{isConsequence,jdbcType=INTEGER},
+            </if>
+            <if test="payWay != null">
+                #{payWay,jdbcType=INTEGER},
+            </if>
+            <if test="isPerform != null">
+                #{isPerform,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectByOrderNo" parameterType="string" resultMap="BaseResultMap">
+        select
+          <include refid="Base_Column_List"/>
+        from consequence where order_no = #{orderNo,jdbcType=VARCHAR}
+    </select>
+
+    <update id="updateStatus" parameterType="map" >
+        update consequence
+        <set>
+            is_perform = 1,
+            <if test="aliOrderStatus != null">
+                ali_order_status = #{aliOrderStatus,jdbcType=INTEGER},
+            </if>
+            <if test="wxOrderStatus != null">
+                wx_order_status = #{wxOrderStatus,jdbcType=INTEGER},
+            </if>
+            update_time = now()
+        </set>
+        where order_no = #{orderNo,jdbcType=VARCHAR}
+    </update>
+
+    <select id="selectByIsPerform" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from consequence where is_perform = 0
+    </select>
+</mapper>

@@ -40,13 +40,13 @@ public class JwtPermissionService {
         this.systemRoleMapper = systemRoleMapper;
     }
 
-    private Collection<SystemRoleUser> getSystemRoleUser(final String userId){
+    private Collection<SystemRoleUser> getSystemRoleUser(final Long userId){
         return systemRoleUserMapper.selectList(
-                new QueryWrapper<SystemRoleUser>() .eq("user_id", userId)
+                new QueryWrapper<SystemRoleUser>().eq("user_id", userId)
         );
     }
 
-    public Collection<String> getRoleName(final String userId){
+    public Collection<String> getRoleName(final Long userId){
         List<SystemRoleUser> systemRoleUserList = (List<SystemRoleUser>) getSystemRoleUser(userId);
 
         return systemRoleUserList.stream()
@@ -63,7 +63,7 @@ public class JwtPermissionService {
 
     Collection<GrantedAuthority> getJwtPermission(final UserLoginSecurity userLoginSecurity) {
 
-        List<SystemRoleUser> systemRoleUserList = (List<SystemRoleUser>) getSystemRoleUser(userLoginSecurity.getUserId());
+        List<SystemRoleUser> systemRoleUserList = (List<SystemRoleUser>) getSystemRoleUser(userLoginSecurity.getId());
 
         Set<String> systemRoleMenuSet = systemRoleUserList.stream()
                 .filter(x -> StringUtils.isNotEmpty(x.getSystemRoleId()))

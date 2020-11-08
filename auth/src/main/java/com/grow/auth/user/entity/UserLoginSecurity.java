@@ -21,8 +21,6 @@ public class UserLoginSecurity implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    private String userId;
-
     private String userName;
 
     @JsonIgnore

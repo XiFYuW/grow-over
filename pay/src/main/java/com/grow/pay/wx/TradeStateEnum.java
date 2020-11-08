@@ -5,20 +5,23 @@ package com.grow.pay.wx;
  * @date 2020/09/13 17:45
  */
 public enum TradeStateEnum {
-    SUCCESS("支付成功","SUCCESS"),
-    REFUND("转入退款","REFUND"),
-    NOTPAY("未支付","NOTPAY"),
-    REVOKED("已撤销（付款码支付）","REVOKED"),
-    USERPAYING("用户支付中（付款码支付）","USERPAYING"),
-    PAYERROR("支付失败(其他原因，如银行返回失败)","NOTPAY"),
-    CLOSED("已关闭","CLOSED");
+    SUCCESS("支付成功", "SUCCESS", 2),
+    REFUND("转入退款", "REFUND", 3),
+    NOTPAY("未支付","NOTPAY", 0),
+    REVOKED("已撤销（付款码支付）", "REVOKED", 4),
+    USERPAYING("用户支付中（付款码支付）","USERPAYING", 5),
+    PAYERROR("支付失败(其他原因，如银行返回失败)", "NOTPAY", 1),
+    CLOSED("已关闭","CLOSED", 6);
 
     private String msg;
 
-    private String code;
+    private String value;
 
-    TradeStateEnum(String msg, String code) {
+    private Integer code;
+
+    TradeStateEnum(String msg, String value, Integer code) {
         this.msg = msg;
+        this.value = value;
         this.code = code;
     }
 
@@ -26,7 +29,11 @@ public enum TradeStateEnum {
         return msg;
     }
 
-    public String getCode() {
+    public String getValue() {
+        return value;
+    }
+
+    public Integer getCode() {
         return code;
     }
 }

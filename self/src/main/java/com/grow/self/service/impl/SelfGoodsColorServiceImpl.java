@@ -17,6 +17,7 @@ import com.grow.self.service.ISelfGoodsColorService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -62,16 +63,24 @@ public class SelfGoodsColorServiceImpl extends ServiceImpl<SelfGoodsColorMapper,
                         .eq("is_del", 0)
         );
 
+        final String goodsNo = isGoodsNo ? selfGoodsColorAddDTO.getGoodsNo() : GoodsGenContext.generateGoodsNo();
+
         final SelfGoodsColor selfGoodsColor = SelfGoodsColor.builder()
                 .colorGoodsNo(GoodsGenContext.generateGoodsNo())
                 .isDel(0)
                 .createTime(DateUtil.toLocalDateTime(DateUtil.date()))
                 .colorPrice(selfGoodsColorAddDTO.getColorPrice())
                 .colorName(selfGoodsColorAddDTO.getColorName())
-                .goodsNo(isGoodsNo ? selfGoodsColorAddDTO.getGoodsNo() : GoodsGenContext.generateGoodsNo())
+                .goodsNo(goodsNo)
                 .build();
         save(selfGoodsColor);
-        return ResponseResultUtils.getResponseResultS("添加成功");
+
+        if (isGoodsNo) {
+            return ResponseResultUtils.getResponseResultS("添加成功");
+        }
+        final Map<String, Object> map = new HashMap<>();
+        map.put("goodsNo", goodsNo);
+        return ResponseResultUtils.getResponseResultS("添加成功", map);
     }
 
     @Override

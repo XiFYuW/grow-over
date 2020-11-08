@@ -26,7 +26,7 @@ public class AliBuildService {
     }
 
     public Map<String, Object> buildPay(final AliBuildPayContext ailBuildPayContext){
-        Factory.setOptions(config);
+        checkConfig();
         try {
             final AlipayTradeAppPayResponse alipayTradeAppPayResponse = ailBuildPayContext.buildPayContext();
             if (ResponseChecker.success(alipayTradeAppPayResponse)) {
@@ -41,7 +41,7 @@ public class AliBuildService {
 
     public void buildNotifyContext(HttpServletRequest request, final AliBuildNotifyContext ailBuildNotifyContext){
         final Map<String, String> params = AliNotifyMap.getParams(request);
-        Factory.setOptions(config);
+        checkConfig();
 
         try {
             ailBuildNotifyContext.buildNotifyContext(params);
@@ -52,7 +52,7 @@ public class AliBuildService {
     }
 
     public void buildGeneral(final AliBuildGeneralContext ailBuildGeneralContext) {
-        Factory.setOptions(config);
+        checkConfig();
         try {
             ailBuildGeneralContext.buildGeneralContext();
         } catch (Exception e) {
@@ -62,13 +62,21 @@ public class AliBuildService {
     }
 
     public void buildGenericExecute(final AliBuildGenericExecuteContext ailBuildGenericExecuteContext){
-        Factory.setOptions(config);
+        checkConfig();
         try {
             ailBuildGenericExecuteContext.buildGenericExecuteContext();
         } catch (Exception e) {
             e.printStackTrace();
             throw new AliRuntimeException(e.getMessage());
         }
+    }
+
+    private void checkConfig(){
+        boolean is = this.config.alipayPublicKey == null || this.config.appId == null || this.config.merchantPrivateKey == null;
+        if (is) {
+            throw new AliRuntimeException("支付宝配置错误");
+        }
+        Factory.setOptions(config);
     }
 
     public interface AliBuildGeneralContext{

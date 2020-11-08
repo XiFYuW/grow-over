@@ -65,7 +65,7 @@ public class LoginServiceImpl implements LoginService {
             throw new AccountExpiredException("密码错误");
         }
 
-        final UserInfoSecurity userInfoSecurity = userSecurityService.findByUserId(jwtUser.getUserLoginSecurity().getUserId());
+        final UserInfoSecurity userInfoSecurity = userSecurityService.findByUserId(jwtUser.getUserLoginSecurity().getId());
         final UserDO userDO = new UserDO(jwtUser.getUsername(), userInfoSecurity);
 
         String token = jwtContext.getTokenHMAC256();
@@ -80,7 +80,7 @@ public class LoginServiceImpl implements LoginService {
                         .loginTime(DateUtil.toLocalDateTime(DateUtil.date()))
                         .loginLocation(IPUtils.getLocation(ip))
                         .isDel(0)
-                        .userId(jwtUser.getUserLoginSecurity().getUserId())
+                        .userId(jwtUser.getUserLoginSecurity().getId())
                         .build()
         );
         return ResponseResultUtils.getResponseResultS("登录成功", new UserLoginVo(token, jwtUser));

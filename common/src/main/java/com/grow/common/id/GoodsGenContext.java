@@ -12,7 +12,7 @@ import java.util.stream.IntStream;
 
 public class GoodsGenContext {
 
-    private static final String PREFIX = "SBD-SP";
+    private static final String PREFIX = "GO-SP";
 
     private static final ZoneId ZONE_ID = ZoneId.of("Asia/Shanghai");
 

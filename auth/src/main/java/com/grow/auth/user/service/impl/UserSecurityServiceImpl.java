@@ -51,7 +51,7 @@ public class UserSecurityServiceImpl extends ServiceImpl<UserLoginSecurityMapper
 
     @Override
     @Transactional(readOnly = true)
-    public UserInfoSecurity findByUserId(String userId) {
+    public UserInfoSecurity findByUserId(Long userId) {
         UserInfoSecurity userInfoSecurity = userInfoSecurityMapper.selectOne(new QueryWrapper<UserInfoSecurity>()
                 .eq("user_id", userId)
                 .eq("is_del", 0)

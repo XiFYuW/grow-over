@@ -13,7 +13,7 @@ public interface UserSecurityService extends IService<UserLoginSecurity> {
 
     UserLoginSecurity findByName(String name);
 
-    UserInfoSecurity findByUserId(String userId);
+    UserInfoSecurity findByUserId(Long userId);
 
     void insertUserLoginRecordSecurity(UserLoginRecordSecurity userLoginRecordSecurity);
 }

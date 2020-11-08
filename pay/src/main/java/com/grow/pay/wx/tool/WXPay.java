@@ -1,5 +1,6 @@
 package com.grow.pay.wx.tool;
 
+import com.grow.pay.exception.WxRuntimeException;
 import com.grow.pay.wx.tool.WXPayConstants.SignType;
 
 import java.util.HashMap;
@@ -49,29 +50,29 @@ public class WXPay {
         this.wxPayRequest = new WXPayRequest(config);
     }
 
-    private void checkWXPayConfig() throws Exception {
+    public void checkWXPayConfig() {
         if (this.config == null) {
-            throw new Exception("config is null");
+            throw new WxRuntimeException("config is null");
         }
         if (this.config.getAppID() == null || this.config.getAppID().trim().length() == 0) {
-            throw new Exception("appid in config is empty");
+            throw new WxRuntimeException("appid in config is empty");
         }
         if (this.config.getMchID() == null || this.config.getMchID().trim().length() == 0) {
-            throw new Exception("appid in config is empty");
+            throw new WxRuntimeException("appid in config is empty");
         }
-        if (this.config.getCertStream() == null) {
-            throw new Exception("cert stream in config is empty");
-        }
-        if (this.config.getWXPayDomain() == null){
-            throw new Exception("config.getWXPayDomain() is null");
-        }
-
-        if (this.config.getHttpConnectTimeoutMs() < 10) {
-            throw new Exception("http connect timeout is too small");
-        }
-        if (this.config.getHttpReadTimeoutMs() < 10) {
-            throw new Exception("http read timeout is too small");
-        }
+//        if (this.config.getCertStream() == null) {
+//            throw new WxRuntimeException("cert stream in config is empty");
+//        }
+//        if (this.config.getWXPayDomain() == null){
+//            throw new WxRuntimeException("config.getWXPayDomain() is null");
+//        }
+//
+//        if (this.config.getHttpConnectTimeoutMs() < 10) {
+//            throw new WxRuntimeException("http connect timeout is too small");
+//        }
+//        if (this.config.getHttpReadTimeoutMs() < 10) {
+//            throw new WxRuntimeException("http read timeout is too small");
+//        }
 
     }
 

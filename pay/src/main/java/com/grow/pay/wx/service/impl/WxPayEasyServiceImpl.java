@@ -30,13 +30,15 @@ public class WxPayEasyServiceImpl implements WxPayEasyService {
 
     @Override
     public Map<String, String> appPay(WxPayRequest wxPayRequest) {
+        wxPay.checkWXPayConfig();
         return wxBuildService.buildPay(() -> wxPay.unifiedOrder(wxPayRequest.getParams()));
     }
 
     @Override
     public void orderQuery(WxPayRequest wxPayRequest, WxOrderQueryContext wxOrderQueryContext) {
+        wxPay.checkWXPayConfig();
         final Map<String, String> resp = wxBuildService.buildGeneral(() -> wxPay.orderQuery(wxPayRequest.getParams()));
-        wxOrderQueryContext.buildOrderQueryContext(resp.get("trade_state"));
+        wxOrderQueryContext.buildOrderQueryContext(resp);
     }
 
     @Override

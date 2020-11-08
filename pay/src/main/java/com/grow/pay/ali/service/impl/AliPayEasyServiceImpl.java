@@ -83,7 +83,7 @@ public class AliPayEasyServiceImpl implements AliPayEasyService {
             if (!"10000".equals(alipayTradeQueryResponse.code)) {
                 throw new AliRuntimeException(alipayTradeQueryResponse.subMsg);
             }
-            aliQueryContext.buildQueryContext(alipayTradeQueryResponse.tradeStatus);
+            aliQueryContext.buildQueryContext(alipayTradeQueryResponse.toMap());
         });
     }
 

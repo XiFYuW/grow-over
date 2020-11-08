@@ -1,9 +1,11 @@
 package com.grow.auth.user.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.grow.common.mybatis.IPTypeHandler;
 import lombok.Builder;
 import lombok.Data;
 
@@ -22,8 +24,9 @@ public class UserLoginRecordSecurity implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    private String userId;
+    private Long userId;
 
+    @TableField(typeHandler = IPTypeHandler.class)
     private String loginIp;
 
     private String loginLocation;

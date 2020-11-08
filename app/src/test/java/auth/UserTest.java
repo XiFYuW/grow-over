@@ -1,6 +1,5 @@
 package auth;
 
-import cn.hutool.core.util.IdUtil;
 import com.grow.BaseApplication;
 import com.grow.auth.user.entity.UserLoginSecurity;
 import com.grow.auth.user.mapper.UserLoginSecurityMapper;
@@ -33,7 +32,6 @@ public class UserTest {
     public void addUser(){
         UserLoginSecurity userLoginSecurity = new UserLoginSecurity();
         userLoginSecurity.setEmail("xif_yuw@163.com");
-        userLoginSecurity.setUserId(IdUtil.simpleUUID());
         userLoginSecurity.setUserName("user02");
         userLoginSecurity.setPassword(EncryptUtils.encryptPassword("123456"));
         userLoginSecurityMapper.insert(userLoginSecurity);

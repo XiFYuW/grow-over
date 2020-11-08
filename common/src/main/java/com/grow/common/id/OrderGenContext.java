@@ -17,7 +17,7 @@ import java.util.stream.IntStream;
 
 public class OrderGenContext {
 
-    private static final String PREFIX = "SBD";
+    private static final String PREFIX = "GO";
 
     private static final ZoneId ZONE_ID = ZoneId.of("Asia/Shanghai");
 

@@ -26,10 +26,7 @@ public class UserInfoSecurity implements Serializable {
     private Long id;
 
     @ApiModelProperty(value = "用户id")
-    private String userId;
-
-    @ApiModelProperty(value = "代理商id")
-    private String parentId;
+    private Long userId;
 
     @ApiModelProperty(value = "用户名称")
     private String userName;

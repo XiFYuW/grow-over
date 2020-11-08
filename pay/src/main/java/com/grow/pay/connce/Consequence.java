@@ -41,20 +41,16 @@ public final class Consequence implements Serializable {
         checkPayWay();
     }
 
-    public boolean isConsequence() {
-        return isConsequence;
-    }
-
     public String getOutTradeNo() {
         return outTradeNo;
     }
 
-    public Integer getPayWay() {
-        return payWay;
+    public boolean isConsequence() {
+        return isConsequence;
     }
 
-    public void setCheckPayWay(AtomicBoolean checkPayWay) {
-        this.checkPayWay = checkPayWay;
+    public Integer getPayWay() {
+        return payWay;
     }
 
     private void checkPayWay(){
@@ -85,6 +81,7 @@ public final class Consequence implements Serializable {
 
     private void wxConsequenceQuery(final WxPayEasyService wxPayEasyService){
         final Map<String, String> params = new HashMap<>();
+        params.put("out_trade_no", outTradeNo);
         final WxPayRequest wxPayRequest = WxPayRequest.builder().params(params).build();
         wxPayEasyService.orderQuery(wxPayRequest, (WxOrderQueryContext) ConsequenceQueryEnum.WX_QUERY.getContext());
     }

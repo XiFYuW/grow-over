@@ -10,4 +10,6 @@ public interface OrderQueryPoolExecutorService {
     void shutdown();
 
     void submitRequest(final Consequence consequence);
+
+    void submitRequestNonTable(final Consequence consequence);
 }

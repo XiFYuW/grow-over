@@ -46,13 +46,12 @@ public class SelfCategoryServiceImpl extends ServiceImpl<SelfCategoryMapper, Sel
     @Override
     @Transactional(readOnly = true)
     public ResponseResult list(SelfCategoryListDTO selfCategoryListDTO) {
-        final UserInfoSecurity userInfoSecurity = userExecuteService.getUserInfo();
+        // final UserInfoSecurity userInfoSecurity = userExecuteService.getUserInfo();
         String categoryName = selfCategoryListDTO.getCategoryName();
         Map<String, Object> params = new HashMap<>();
         params.put("shop_id", selfCategoryListDTO.getShopId());
         params.put("category_level", selfCategoryListDTO.getCategoryLevel());
         params.put("category_parent_id", selfCategoryListDTO.getCategoryParentId());
-        params.put("parent_id", userInfoSecurity == null ? null : userInfoSecurity.getParentId());
         Map<String, Object> data = PageUtils.getDateMap(() -> page(PageUtils.getPage(
                 new Page<>(), selfCategoryListDTO.getPage(), selfCategoryListDTO.getLimit()),
                 new QueryWrapper<SelfCategory>()
