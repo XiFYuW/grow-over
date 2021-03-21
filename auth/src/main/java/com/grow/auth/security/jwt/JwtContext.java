@@ -15,6 +15,7 @@ import com.grow.common.exception.BaseRuntimeException;
 import com.grow.common.result.ResponseResultUtils;
 import com.grow.common.security.RequestHolder;
 import com.grow.config.jwt.JwtConfig;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -24,7 +25,7 @@ public class JwtContext {
 
     private final JwtConfig jwtConfig;
 
-    public JwtContext(JwtConfig jwtConfig) {
+    public JwtContext(@Qualifier("jwtConfig") JwtConfig jwtConfig) {
         this.jwtConfig = jwtConfig;
     }
 
@@ -33,10 +34,10 @@ public class JwtContext {
     }
 
     public String getTokenHMAC256() {
-        Algorithm algorithm = Algorithm.HMAC256(jwtConfig.getSecret());
+        Algorithm algorithm = Algorithm.HMAC256(jwtConfig.getBase64Secret());
 
         DateTime now = DateUtil.date(Calendar.getInstance());
-        DateTime expireDate = DateUtil.offsetMinute(now, jwtConfig.getExpiration());
+        DateTime expireDate = DateUtil.offsetMinute(now, jwtConfig.getTokenValidityInMinute());
 
         Map<String, Object> map = new HashMap<>();
         map.put("alg", "HS256");
@@ -59,7 +60,7 @@ public class JwtContext {
     public DecodedJWT verifyTokenHMAC256(String token) {
         DecodedJWT jwt;
         try {
-            Algorithm algorithm = Algorithm.HMAC256(jwtConfig.getSecret());
+            Algorithm algorithm = Algorithm.HMAC256(jwtConfig.getBase64Secret());
             JWTVerifier verifier = JWT.require(algorithm).withIssuer("SERVER").build();
             jwt = verifier.verify(token);
         } catch (JWTVerificationException e){

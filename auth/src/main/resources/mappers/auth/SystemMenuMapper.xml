@@ -2,4 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.grow.auth.system.mapper.SystemMenuMapper">
 
+    <select id="listByRoleIds" resultType="com.grow.auth.system.entity.SystemMenu">
+        select
+            menu.*
+        from
+            system_role_menu as roleMenu inner join system_menu as menu on
+    </select>
 </mapper>

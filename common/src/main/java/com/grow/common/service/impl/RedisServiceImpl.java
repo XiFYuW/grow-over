@@ -21,7 +21,9 @@ public class RedisServiceImpl implements RedisService {
     private final JwtConfig jwtConfig;
 
     @Autowired
-    public RedisServiceImpl(RedisTemplate<String, Object> redisTemplate, @Qualifier("systemConfig") SystemConfig systemConfig, JwtConfig jwtConfig) {
+    public RedisServiceImpl(RedisTemplate<String, Object> redisTemplate,
+                            @Qualifier("systemConfig") SystemConfig systemConfig,
+                            @Qualifier("jwtConfig") JwtConfig jwtConfig) {
         this.redisTemplate = redisTemplate;
         this.systemConfig = systemConfig;
         this.jwtConfig = jwtConfig;
@@ -36,11 +38,16 @@ public class RedisServiceImpl implements RedisService {
     public void addTokeData(String token, Object object) {
         final String key = systemConfig.getRedisTokenDir() + systemConfig.getRedisPrefix() + token;
         redisTemplate.opsForValue().set(key, object);
-        redisTemplate.expire(key, jwtConfig.getExpiration(), TimeUnit.MINUTES);
+        redisTemplate.expire(key, jwtConfig.getTokenValidityInMinute(), TimeUnit.MINUTES);
     }
 
     @Override
     public <T> T getClassByToken(String authToken, Class<T> clazz) {
         return JSONObject.parseObject(JSONObject.toJSONString(this.getDataByToken(authToken)), clazz);
+    }
+
+    @Override
+    public void delTokeData(String token) {
+        redisTemplate.delete(token);
     }
 }

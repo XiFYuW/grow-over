@@ -24,7 +24,7 @@ public class SystemMenuUpdateDTO implements Serializable {
 
     @ApiModelProperty(value = "id", example = "0", required = true)
     @NotNull
-    private Long id;
+    private Integer id;
 
     @ApiModelProperty(value = "路径", required = true)
     @NotBlank

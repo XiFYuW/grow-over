@@ -23,7 +23,7 @@ import java.util.List;
 
 /**
  * @author https://github.com/XiFYuW
- * @date 2020/08/01 13:14
+ * @since  2020/08/01 13:14
  */
 @Configuration
 @EnableSwagger2

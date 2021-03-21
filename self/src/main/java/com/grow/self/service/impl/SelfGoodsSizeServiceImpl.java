@@ -43,7 +43,7 @@ public class SelfGoodsSizeServiceImpl extends ServiceImpl<SelfGoodsSizeMapper, S
         final String goodsNo = selfGoodsSizeListDTO.getGoodsNo();
         Map<String, Object> data = selfGoodsCheckServer.listSelfGoodsStyle(
                 selfGoodsSizeListDTO.getPage(),
-                selfGoodsSizeListDTO.getLimit(),
+                selfGoodsSizeListDTO.getSize(),
                 goodsNo,
                 this
         );

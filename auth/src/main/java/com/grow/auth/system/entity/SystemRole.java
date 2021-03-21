@@ -24,7 +24,7 @@ public class SystemRole implements Serializable {
 
     @TableId(value = "id", type = IdType.AUTO)
     @ApiModelProperty(value = "id")
-    private Long id;
+    private Integer id;
 
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;
@@ -40,9 +40,6 @@ public class SystemRole implements Serializable {
 
     @ApiModelProperty(value = "角色级别，0...1")
     private Integer systemRoleLevel;
-
-    @ApiModelProperty(value = "角色id")
-    private String systemRoleId;
 
 
 }

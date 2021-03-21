@@ -66,6 +66,16 @@ public class BaseExceptionAdvice {
     }
 
     /**
+     * 自定义异常BaseRuntimeException
+     */
+    @ExceptionHandler(value = BaseRuntimeErrHintException.class)
+    public ResponseResult errorHandlerBaseRuntimeErrHintException(BaseRuntimeErrHintException baseRuntimeErrHintException) {
+        String msg = baseRuntimeErrHintException.getMsg();
+        log.info("处理异常返回：【{}】", msg);
+        return ResponseResultUtils.getResponseResultF(msg);
+    }
+
+    /**
      * 处理账号异常
      */
     @ExceptionHandler(AccountExpiredException.class)

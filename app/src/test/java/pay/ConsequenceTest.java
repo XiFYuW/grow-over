@@ -28,19 +28,19 @@ public class ConsequenceTest {
 
     @Test
     public void consequenceTest() throws Exception{
-        OrderQueryPoolExecutorService orderQueryPoolExecutorService = new OrderQueryPoolService();
-
-        orderQueryPoolExecutorService.start();
-
-        for (int i = 0; i < 10; i++) {
-            final Consequence consequence = new Consequence(true, "ZM20092713552115010003", 1, aliPayEasyService);
-            orderQueryPoolExecutorService.submitRequest(consequence);
-        }
-
-
-        Thread.sleep(60000);
-
-        orderQueryPoolExecutorService.shutdown();
+//        OrderQueryPoolExecutorService orderQueryPoolExecutorService = new OrderQueryPoolService();
+//
+//        orderQueryPoolExecutorService.start();
+//
+//        for (int i = 0; i < 10; i++) {
+//            final Consequence consequence = new Consequence(true, "ZM20092713552115010003", 1, aliPayEasyService);
+//            orderQueryPoolExecutorService.submitRequest(consequence);
+//        }
+//
+//
+//        Thread.sleep(60000);
+//
+//        orderQueryPoolExecutorService.shutdown();
 
     }
 }

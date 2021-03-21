@@ -5,7 +5,9 @@ import com.grow.auth.login.dto.LoginDTO;
 
 public interface LoginService {
 
-    ResponseResult login(LoginDTO loginDTO);
+    ResponseResult login(LoginDTO loginDTO) throws Exception;
 
-    ResponseResult getInfoNew();
+    ResponseResult loginOut();
+
+    ResponseResult getUserInfo();
 }

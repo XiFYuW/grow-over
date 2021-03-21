@@ -12,10 +12,10 @@ SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for consequence
+-- Table structure for consequence_pay
 -- ----------------------------
-DROP TABLE IF EXISTS `consequence`;
-CREATE TABLE `consequence`  (
+DROP TABLE IF EXISTS `consequence_pay`;
+CREATE TABLE `consequence_pay`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '序列号',
   `order_no` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '商户订单号',
   `is_consequence` tinyint(1) NOT NULL COMMENT '1.是 0.否',

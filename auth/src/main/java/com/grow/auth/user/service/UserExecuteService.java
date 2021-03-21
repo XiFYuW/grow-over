@@ -5,7 +5,7 @@ import com.grow.auth.user.entity.UserInfoSecurity;
 
 /**
  * @author https://github.com/XiFYuW
- * @date 2020/09/02 12:02
+ * @since  2020/09/02 12:02
  */
 public interface UserExecuteService {
 

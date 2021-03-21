@@ -1,9 +1,11 @@
 package com.grow.pay.connce.store;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import java.util.List;
 import java.util.Map;
-
-public interface ConsequenceMapper {
+@Mapper
+public interface ConsequencePayMapper {
 
     int insertSelective(ConsequencePay record);
 

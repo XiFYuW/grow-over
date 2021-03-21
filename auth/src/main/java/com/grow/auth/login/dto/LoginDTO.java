@@ -19,9 +19,13 @@ public class LoginDTO implements Serializable {
 
     @NotBlank
     @ApiModelProperty(value = "登录账号")
-    private String userName;
+    private String username;
 
     @NotBlank
     @ApiModelProperty(value = "登录密码")
     private String password;
+
+    private String code;
+
+    private String uuid = "";
 }

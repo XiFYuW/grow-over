@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  * @author https://github.com/XiFYuW
- * @date 2020/09/05 11:41
+ * @since  2020/09/05 11:41
  */
 @Data
 @AllArgsConstructor
@@ -17,7 +17,7 @@ public class SystemMenuSelectTreeDataVO implements Serializable {
 
     private String systemMenuName;
 
-    private Long id;
+    private Integer id;
 
-    private Long systemMenuPid;
+    private Integer systemMenuPid;
 }

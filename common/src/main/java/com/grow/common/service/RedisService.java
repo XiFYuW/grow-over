@@ -7,4 +7,6 @@ public interface RedisService {
     void addTokeData(String token, Object object);
 
     <T> T getClassByToken(String authToken, Class<T> clazz);
+
+    void delTokeData(String token);
 }

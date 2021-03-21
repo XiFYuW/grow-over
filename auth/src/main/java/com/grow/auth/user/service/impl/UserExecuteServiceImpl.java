@@ -1,6 +1,5 @@
 package com.grow.auth.user.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.grow.auth.security.UserDO;
 import com.grow.auth.security.jwt.JwtContext;
 import com.grow.auth.user.entity.UserInfoSecurity;
@@ -18,7 +17,7 @@ import java.util.Optional;
 
 /**
  * @author https://github.com/XiFYuW
- * @date 2020/09/02 12:02
+ * @since  2020/09/02 12:02
  */
 @Service
 @Slf4j
@@ -39,9 +38,7 @@ public class UserExecuteServiceImpl implements UserExecuteService {
         Optional.ofNullable(userDO).orElseThrow(() ->
                 new BaseRuntimeException(ResponseResultUtils.getResponseResult(ResultEnum.TOKEN_EXPIRED.getCode(),
                         ResultEnum.TOKEN_EXPIRED.getMessage())));
-        UserInfoSecurity userInfoSecurity = userDO.getUserInfoSecurity();
-        log.info("用户信息：【{}】", JSON.toJSONString(userInfoSecurity));
-        return userInfoSecurity;
+        return userDO.getUserInfoSecurity();
     }
 
     @Override

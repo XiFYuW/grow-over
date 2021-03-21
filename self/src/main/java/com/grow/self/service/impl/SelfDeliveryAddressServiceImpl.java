@@ -38,7 +38,7 @@ public class SelfDeliveryAddressServiceImpl extends ServiceImpl<SelfDeliveryAddr
     public ResponseResult list(SelfDeliveryAddressListDTO selfDeliveryAddressListDTO) {
         String userId = selfDeliveryAddressListDTO.getUserId();
         Map<String, Object> data = PageUtils.getDateMap(() -> page(PageUtils.getPage(
-                new Page<>(), selfDeliveryAddressListDTO.getPage(), selfDeliveryAddressListDTO.getLimit()),
+                selfDeliveryAddressListDTO.getPage(), selfDeliveryAddressListDTO.getSize()),
                 new QueryWrapper<SelfDeliveryAddress>()
                         .eq("is_del", 0)
                         .eq(!StringUtils.isEmpty(userId), "user_id", userId)

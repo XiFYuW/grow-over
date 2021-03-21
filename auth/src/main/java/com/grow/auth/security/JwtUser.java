@@ -21,6 +21,8 @@ public class JwtUser implements UserDetails {
     @JsonIgnore
     private final Collection<GrantedAuthority> authorities;
 
+    private final Collection roles;
+
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
         return authorities;

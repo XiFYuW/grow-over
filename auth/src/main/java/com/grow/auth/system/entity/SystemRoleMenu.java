@@ -36,10 +36,10 @@ public class SystemRoleMenu implements Serializable {
     private Integer isDel;
 
     @ApiModelProperty(value = "角色id")
-    private String systemRoleId;
+    private Integer systemRoleId;
 
     @ApiModelProperty(value = "菜单id")
-    private String systemMenuId;
+    private Integer systemMenuId;
 
 
 }

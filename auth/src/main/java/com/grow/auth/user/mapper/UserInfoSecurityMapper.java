@@ -6,9 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @author https://github.com/XiFYuW
- * @date 2020/08/26 15:01
+ * @since  2020/08/26 15:01
  */
 @Mapper
 public interface UserInfoSecurityMapper extends BaseMapper<UserInfoSecurity> {
-
 }

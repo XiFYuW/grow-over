@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
+
 /**
  * @author https://github.com/XiFYuW
- * @date 2020/08/26 13:10
+ * @since  2020/08/26 13:10
  */
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
@@ -32,7 +34,8 @@ public class JwtUserDetailsService implements UserDetailsService {
         final UserLoginSecurity userLoginSecurity = userSecurityService.findByName(s);
         return new JwtUser(
                 userLoginSecurity,
-                jwtPermissionService.getJwtPermission(userLoginSecurity)
+                jwtPermissionService.getJwtPermission(userLoginSecurity),
+                jwtPermissionService.getRoleName(userLoginSecurity.getId())
         );
     }
 }

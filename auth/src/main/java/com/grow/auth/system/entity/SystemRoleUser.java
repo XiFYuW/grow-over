@@ -36,10 +36,10 @@ public class SystemRoleUser implements Serializable {
     private LocalDateTime updateTime;
 
     @ApiModelProperty(value = "角色id")
-    private String systemRoleId;
+    private Integer systemRoleId;
 
     @ApiModelProperty(value = "用户id")
-    private String userId;
+    private Integer userId;
 
 
 }

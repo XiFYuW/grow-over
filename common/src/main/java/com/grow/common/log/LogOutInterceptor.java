@@ -14,7 +14,7 @@ import java.lang.annotation.Annotation;
 
 /**
  * @author https://github.com/XiFYuW
- * @date 2020/08/31 13:24
+ * @since  2020/08/31 13:24
  */
 @Component
 @Aspect
@@ -30,13 +30,13 @@ public class LogOutInterceptor {
             Annotation[][] annotations = JoinPointUtil.getParameterAnnotations(point);
             Object validObject = JoinPointUtil.getParameterAnnotationObject(objects, annotations, Valid.class);
             if (validObject != null) {
-                log.info("请求接口" + url + "请求参数：【{}】", JSON.toJSONString(validObject));
+                log.info("请求接口" + url + "请求参数：{}", JSON.toJSONString(validObject));
             }
         } else {
             log.info("请求接口" + url);
         }
         Object o = point.proceed(objects);
-        log.info("请求接口" + url + "返回数据：【{}】", JSON.toJSONString(o));
+        log.info("请求接口" + url + "返回数据：{}", JSON.toJSONString(o));
         return o;
     }
 

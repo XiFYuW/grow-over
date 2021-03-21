@@ -39,7 +39,7 @@ public class SelfGoodsCheckServer {
             long limit,
             String goodsNo,
             final ServiceImpl<M, T> mtService) {
-        return PageUtils.getDateMap(() -> mtService.page(PageUtils.getPage(new Page<>(), current, limit), new QueryWrapper<T>()
+        return PageUtils.getDateMap(() -> mtService.page(PageUtils.getPage(current, limit), new QueryWrapper<T>()
                 .eq("is_del", 0)
                 .eq(!StringUtils.isEmpty(goodsNo), "goods_no", goodsNo)
                 .orderByDesc("create_time")));

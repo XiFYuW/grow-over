@@ -29,8 +29,8 @@ public class SystemRoleUserTest {
     public void addSystemRoleUser(){
         SystemRoleUser systemRoleUser = new SystemRoleUser();
         systemRoleUser.setCreateTime(DateUtil.toLocalDateTime(DateUtil.date()));
-        systemRoleUser.setSystemRoleId("f4e0303f90344b49b9f9b7cf0bfb552b");
-        systemRoleUser.setUserId("c8965e8f2d8d4fa5838758bae6080bf5");
+        systemRoleUser.setSystemRoleId(1);
+        systemRoleUser.setUserId(1);
         systemRoleUserMapper.insert(systemRoleUser);
     }
 }

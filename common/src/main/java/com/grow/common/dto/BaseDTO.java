@@ -1,15 +1,12 @@
 package com.grow.common.dto;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
-@Setter
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class BaseDTO implements Serializable {
@@ -17,8 +14,10 @@ public class BaseDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "页码", example = "1")
+    @NotNull(message = "页码不能为空")
     private Long page;
 
-    @ApiModelProperty(value = "每页数量", example = "10")
-    private Long limit;
+    @ApiModelProperty(value = "每页大少", example = "10")
+    @NotNull(message = "每页大少不能为空")
+    private Long size;
 }

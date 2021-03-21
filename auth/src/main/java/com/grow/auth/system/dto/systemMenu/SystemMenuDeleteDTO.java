@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 /**
  * @author https://github.com/XiFYuW
- * @date 2020/09/04 17:08
+ * @since  2020/09/04 17:08
  */
 @Setter
 @Getter
@@ -23,6 +23,6 @@ public class SystemMenuDeleteDTO implements Serializable {
 
     @ApiModelProperty(value = "id", example = "0", required = true)
     @NotNull
-    private Long id;
+    private Integer id;
 
 }

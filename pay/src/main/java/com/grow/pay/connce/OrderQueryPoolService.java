@@ -2,10 +2,11 @@ package com.grow.pay.connce;
 
 import cn.hutool.core.date.DateUtil;
 import com.grow.pay.ali.service.AliPayEasyService;
-import com.grow.pay.connce.store.ConsequenceMapper;
+import com.grow.pay.connce.store.ConsequencePayMapper;
 import com.grow.pay.connce.store.ConsequencePay;
 import com.grow.pay.wx.service.WxPayEasyService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.concurrent.*;
@@ -15,6 +16,7 @@ import java.util.concurrent.*;
  * @date 2020/10/20 16:31
  */
 @Slf4j
+@Service
 public class OrderQueryPoolService implements OrderQueryPoolExecutorService {
 
     private final ThreadPoolExecutor orderQueryExecutor;
@@ -23,10 +25,10 @@ public class OrderQueryPoolService implements OrderQueryPoolExecutorService {
 
     private final ScheduledExecutorService orderQueryLaterExecutors;
 
-    private final ConsequenceMapper consequenceMapper;
+    private final ConsequencePayMapper consequencePayMapper;
 
-    public OrderQueryPoolService(ConsequenceMapper consequenceMapper) {
-        this.consequenceMapper = consequenceMapper;
+    public OrderQueryPoolService(ConsequencePayMapper consequencePayMapper) {
+        this.consequencePayMapper = consequencePayMapper;
         BlockingQueue<Runnable> orderQueryQueue = new LinkedBlockingQueue<>();
         this.orderQueryExecutor = new ThreadPoolExecutor(
                 5,
@@ -44,7 +46,7 @@ public class OrderQueryPoolService implements OrderQueryPoolExecutorService {
         /*清除订单查询任务*/
         this.cleanOrderQueryExecutors.scheduleAtFixedRate(() -> {
             /*扫表 >> 重入*/
-            List<ConsequencePay> consequencePayList = consequenceMapper.selectByIsPerform();
+            List<ConsequencePay> consequencePayList = consequencePayMapper.selectByIsPerform();
             if (consequencePayList != null && consequencePayList.size() > 0) {
                 log.warn("扫表数量: {}", consequencePayList.size());
                 consequencePayList.forEach(x -> {
@@ -69,8 +71,8 @@ public class OrderQueryPoolService implements OrderQueryPoolExecutorService {
 
     @Override
     public void submitRequest(final Consequence consequence) {
-        if (consequenceMapper.selectByOrderNo(consequence.getOutTradeNo()) == null/*去重*/) {
-            consequenceMapper.insertSelective(ConsequencePay
+        if (consequencePayMapper.selectByOrderNo(consequence.getOutTradeNo()) == null/*去重*/) {
+            consequencePayMapper.insertSelective(ConsequencePay
                     .builder()
                     .createTime(DateUtil.date())
                     .isConsequence(consequence.isConsequence() ? 1 : 0)

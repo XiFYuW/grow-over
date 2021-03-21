@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.grow.pay.connce.store.ConsequenceMapper">
+<mapper namespace="com.grow.pay.connce.store.ConsequencePayMapper">
     <resultMap id="BaseResultMap" type="com.grow.pay.connce.store.ConsequencePay">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="order_no" property="orderNo" jdbcType="VARCHAR"/>

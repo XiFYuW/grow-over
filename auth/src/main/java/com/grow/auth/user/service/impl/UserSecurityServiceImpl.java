@@ -1,6 +1,6 @@
 package com.grow.auth.user.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.grow.auth.user.entity.UserInfoSecurity;
 import com.grow.auth.user.entity.UserLoginRecordSecurity;
@@ -19,7 +19,7 @@ import java.util.Optional;
 
 /**
  * @author https://github.com/XiFYuW
- * @date 2020/08/26 14:51
+ * @since  2020/08/26 14:51
  */
 @Service
 public class UserSecurityServiceImpl extends ServiceImpl<UserLoginSecurityMapper, UserLoginSecurity> implements UserSecurityService {
@@ -42,7 +42,7 @@ public class UserSecurityServiceImpl extends ServiceImpl<UserLoginSecurityMapper
     @Transactional(readOnly = true)
     public UserLoginSecurity findByName(String name) {
         UserLoginSecurity userLoginSecurity = userLoginSecurityMapper.selectOne(
-                new QueryWrapper<UserLoginSecurity>().eq("user_name", name)
+                new LambdaQueryWrapper<UserLoginSecurity>().eq(UserLoginSecurity::getUserName, name)
         );
         Optional.ofNullable(userLoginSecurity)
                 .orElseThrow(() -> new BaseRuntimeException(ResponseResultUtils.getResponseResultF("用户名不正确")));
@@ -52,13 +52,18 @@ public class UserSecurityServiceImpl extends ServiceImpl<UserLoginSecurityMapper
     @Override
     @Transactional(readOnly = true)
     public UserInfoSecurity findByUserId(Long userId) {
-        UserInfoSecurity userInfoSecurity = userInfoSecurityMapper.selectOne(new QueryWrapper<UserInfoSecurity>()
-                .eq("user_id", userId)
-                .eq("is_del", 0)
+        UserInfoSecurity userInfoSecurity = userInfoSecurityMapper.selectOne(new LambdaQueryWrapper<UserInfoSecurity>()
+                .eq(UserInfoSecurity::getUserId, userId)
+                .eq(UserInfoSecurity::getIsDel, 0)
         );
         Optional.ofNullable(userInfoSecurity)
                 .orElseThrow(() -> new BaseRuntimeException(ResponseResultUtils.getResponseResultF("用户信息不存在")));
         return userInfoSecurity;
+    }
+
+    @Override
+    public UserLoginSecurity findById(Long id) {
+        return userLoginSecurityMapper.selectById(id);
     }
 
     @Override

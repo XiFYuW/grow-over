@@ -1,6 +1,7 @@
 package com.grow.auth.login.vo;
 
 import com.grow.auth.security.JwtUser;
+import com.grow.auth.user.entity.UserInfoSecurity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

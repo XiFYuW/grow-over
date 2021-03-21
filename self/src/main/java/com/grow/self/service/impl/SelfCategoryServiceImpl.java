@@ -53,7 +53,7 @@ public class SelfCategoryServiceImpl extends ServiceImpl<SelfCategoryMapper, Sel
         params.put("category_level", selfCategoryListDTO.getCategoryLevel());
         params.put("category_parent_id", selfCategoryListDTO.getCategoryParentId());
         Map<String, Object> data = PageUtils.getDateMap(() -> page(PageUtils.getPage(
-                new Page<>(), selfCategoryListDTO.getPage(), selfCategoryListDTO.getLimit()),
+                selfCategoryListDTO.getPage(), selfCategoryListDTO.getSize()),
                 new QueryWrapper<SelfCategory>()
                         .eq("is_del", 0)
                         .allEq(params, false)
@@ -113,7 +113,7 @@ public class SelfCategoryServiceImpl extends ServiceImpl<SelfCategoryMapper, Sel
         params.put("category_parent_id", selfCategoryGetSelectDataDTO.getCategoryParentId());
 
         List<SelfCategory> data = PageUtils.getDateMapByRecords(() -> page(PageUtils.getPage(
-                new Page<>(), selfCategoryGetSelectDataDTO.getPage(), selfCategoryGetSelectDataDTO.getLimit()),
+                selfCategoryGetSelectDataDTO.getPage(), selfCategoryGetSelectDataDTO.getSize()),
                 new QueryWrapper<SelfCategory>().allEq(params, false))
         );
 

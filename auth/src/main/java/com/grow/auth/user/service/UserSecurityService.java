@@ -7,13 +7,15 @@ import com.grow.auth.user.entity.UserLoginSecurity;
 
 /**
  * @author https://github.com/XiFYuW
- * @date 2020/08/26 14:48
+ * @since  2020/08/26 14:48
  */
 public interface UserSecurityService extends IService<UserLoginSecurity> {
 
     UserLoginSecurity findByName(String name);
 
     UserInfoSecurity findByUserId(Long userId);
+
+    UserLoginSecurity findById(Long userId);
 
     void insertUserLoginRecordSecurity(UserLoginRecordSecurity userLoginRecordSecurity);
 }

@@ -8,11 +8,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 系统菜单
@@ -21,7 +17,7 @@ import javax.validation.Valid;
  * @since 2020-09-04
  */
 @RestController
-@RequestMapping("/systemMenu")
+@RequestMapping("/web/systemMenu")
 @Slf4j
 @Api(tags = "系统菜单")
 public class SystemMenuController {
@@ -32,52 +28,64 @@ public class SystemMenuController {
         this.iSystemMenuService = iSystemMenuService;
     }
 
-    @ApiOperation(value="系统菜单分页查询")
-    @PostMapping(value = "/list", produces = "application/json;charset=UTF-8")
-    @Validated
+    @ApiOperation(value="系统顶级菜单分页查询")
+    @GetMapping(value = "/list")
     @LogOutAnnotation(url = "/systemMenu/list")
-    public ResponseResult systemMenuList(@Valid SystemMenuListDTO systemMenuListDTO){
+    public ResponseResult systemMenuList(@Validated SystemMenuListDTO systemMenuListDTO){
         return iSystemMenuService.list(systemMenuListDTO);
     }
 
+    @ApiOperation(value="系统子菜单查询")
+    @GetMapping(value = "/childrenList")
+    @LogOutAnnotation(url = "/systemMenu/childrenList")
+    public ResponseResult childrenList(@Validated SystemMenuChildrenListDTO systemMenuChildrenListDTO){
+        return iSystemMenuService.childrenList(systemMenuChildrenListDTO);
+    }
+
     @ApiOperation(value="系统菜单新增")
-    @PostMapping(value = "/add", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/add")
     @Validated
     @LogOutAnnotation(url = "/systemMenu/add")
-    public ResponseResult systemMenuAdd(@Valid SystemMenuAddDTO systemMenuAddDTO){
+    public ResponseResult systemMenuAdd(@Validated @RequestBody SystemMenuAddDTO systemMenuAddDTO){
         return iSystemMenuService.add(systemMenuAddDTO);
     }
 
     @ApiOperation(value="系统菜单修改")
-    @PostMapping(value = "/update", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/update")
     @Validated
     @LogOutAnnotation(url = "/systemMenu/update")
-    public ResponseResult systemMenuUpdate(@Valid SystemMenuUpdateDTO systemMenuUpdateDTO){
+    public ResponseResult systemMenuUpdate(@Validated SystemMenuUpdateDTO systemMenuUpdateDTO){
         return iSystemMenuService.update(systemMenuUpdateDTO);
     }
 
     @ApiOperation(value="系统菜单删除")
-    @PostMapping(value = "/delete", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/delete")
     @Validated
     @LogOutAnnotation(url = "/systemMenu/delete")
-    public ResponseResult systemMenuDelete(@Valid SystemMenuDeleteDTO systemMenuDeleteDTO){
+    public ResponseResult systemMenuDelete(@Validated SystemMenuDeleteDTO systemMenuDeleteDTO){
         return iSystemMenuService.delete(systemMenuDeleteDTO);
     }
 
     @ApiOperation(value="系统菜单下拉列表树")
-    @PostMapping(value = "/selectTreeData", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/selectTreeData")
     @Validated
     @LogOutAnnotation(url = "/systemMenu/selectTreeData")
-    public ResponseResult systemMenuSelectTreeData(@Valid SystemMenuSelectTreeDataDTO systemMenuSelectTreeDataDTO){
+    public ResponseResult systemMenuSelectTreeData(@Validated SystemMenuSelectTreeDataDTO systemMenuSelectTreeDataDTO){
         return iSystemMenuService.selectTreeData(systemMenuSelectTreeDataDTO);
     }
 
     @ApiOperation(value="系统菜单授权")
-    @PostMapping(value = "/accredit", produces = "application/json;charset=UTF-8")
-    @Validated
+    @PostMapping(value = "/accredit")
     @LogOutAnnotation(url = "/systemMenu/accredit")
-    public ResponseResult systemMenuAccredit(@Valid SystemMenuAccreditDTO systemMenuAccreditDTO){
+    public ResponseResult systemMenuAccredit(@Validated SystemMenuAccreditDTO systemMenuAccreditDTO){
         return iSystemMenuService.accredit(systemMenuAccreditDTO);
+    }
+
+    @ApiOperation(value="登录获取系统菜单")
+    @PostMapping(value = "/structure")
+    @LogOutAnnotation(url = "/systemMenu/structure")
+    public ResponseResult systemMenuStructure(){
+        return iSystemMenuService.structure();
     }
 }
 

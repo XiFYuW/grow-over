@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * @author https://github.com/XiFYuW
- * @date 2020/09/06 17:44
+ * @since  2020/09/06 17:44
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = BaseApplication.class)
@@ -33,8 +33,7 @@ public class SystemMenuTest {
                 .systemPic("")
                 .systemPath("/")
                 .systemMenuName("获取登录用户信息")
-                .systemMenuId(IdUtil.simpleUUID())
-                .systemMenuPid(0L)
+                .systemMenuPid(0)
                 .build();
         systemMenuMapper.insert(systemMenu);
     }

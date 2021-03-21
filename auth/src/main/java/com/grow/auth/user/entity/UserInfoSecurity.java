@@ -1,6 +1,7 @@
 package com.grow.auth.user.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 
 /**
  * @author https://github.com/XiFYuW
- * @date 2020/09/02 11:41
+ * @since  2020/09/02 11:41
  */
 @TableName("user_info")
 @Data
@@ -29,6 +30,10 @@ public class UserInfoSecurity implements Serializable {
     private Long userId;
 
     @ApiModelProperty(value = "用户名称")
+    private String nickName;
+
+    @ApiModelProperty(value = "用户登录账号")
+    @TableField(exist = false)
     private String userName;
 
     @ApiModelProperty(value = "用户性别：0：未知 1：女  2：男")
@@ -38,7 +43,6 @@ public class UserInfoSecurity implements Serializable {
     private String userPic;
 
     @ApiModelProperty(value = "用户出生日期")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private LocalDateTime userBirthDate;
 
     @ApiModelProperty(value = "更新时间")
@@ -47,7 +51,6 @@ public class UserInfoSecurity implements Serializable {
     private LocalDateTime updateTime;
 
     @ApiModelProperty(value = "创建时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private LocalDateTime createTime;
 
     @ApiModelProperty(value = "用户籍贯")

@@ -66,7 +66,7 @@ public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
             }
         }
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("origin"));
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, OPTIONS");
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "x-requested-with,Authorization,content-type,X-Token");
         response.setHeader("Access-Control-Allow-Credentials", "true");

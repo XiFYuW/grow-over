@@ -54,14 +54,14 @@ public class SelfGoodsServiceImpl extends ServiceImpl<SelfGoodsMapper, SelfGoods
         String goodsName = selfGoodsListDTO.getGoodsName();
         String goodsTypeId = selfGoodsListDTO.getGoodsTypeId();
         Map<String, Object> data = PageUtils.getDateMap(() -> page(PageUtils.getPage(
-        new Page<>(),selfGoodsListDTO.getPage(),selfGoodsListDTO.getLimit()),
-        new QueryWrapper<SelfGoods>()
-                .eq("is_del",0)
-                .likeRight(!StringUtils.isEmpty(goodsNo), "goods_no", goodsNo)
-                .likeRight(!StringUtils.isEmpty(goodsName),"goods_name",goodsName)
-                .eq(!StringUtils.isEmpty(goodsTypeId),"goods_type_id",goodsTypeId)
-                .orderByDesc("create_time")));
-        return ResponseResultUtils.getResponseResultS("查询成功",data);
+                selfGoodsListDTO.getPage(), selfGoodsListDTO.getSize()),
+                new QueryWrapper<SelfGoods>()
+                        .eq("is_del", 0)
+                        .likeRight(!StringUtils.isEmpty(goodsNo), "goods_no", goodsNo)
+                        .likeRight(!StringUtils.isEmpty(goodsName), "goods_name", goodsName)
+                        .eq(!StringUtils.isEmpty(goodsTypeId), "goods_type_id", goodsTypeId)
+                        .orderByDesc("create_time")));
+        return ResponseResultUtils.getResponseResultS("查询成功", data);
     }
 
     @Override
@@ -102,16 +102,16 @@ public class SelfGoodsServiceImpl extends ServiceImpl<SelfGoodsMapper, SelfGoods
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ResponseResult update(SelfGoodsUpdateDTO selfGoodsUpdateDTO) {
-         final SelfGoods selfGoods = SelfGoods.builder()
-                 .goodsName(selfGoodsUpdateDTO.getGoodsName())
-                 .goodsTypeId(selfGoodsUpdateDTO.getGoodsTypeId())
-                 .goodsIntroduce(selfGoodsUpdateDTO.getGoodsIntroduce())
-                 .goodsDetails(selfGoodsUpdateDTO.getGoodsDetails())
-                 .goodsSupply(selfGoodsUpdateDTO.getGoodsSupply())
-                 .updateTime(DateUtil.toLocalDateTime(DateUtil.date()))
-                 .build();
+        final SelfGoods selfGoods = SelfGoods.builder()
+                .goodsName(selfGoodsUpdateDTO.getGoodsName())
+                .goodsTypeId(selfGoodsUpdateDTO.getGoodsTypeId())
+                .goodsIntroduce(selfGoodsUpdateDTO.getGoodsIntroduce())
+                .goodsDetails(selfGoodsUpdateDTO.getGoodsDetails())
+                .goodsSupply(selfGoodsUpdateDTO.getGoodsSupply())
+                .updateTime(DateUtil.toLocalDateTime(DateUtil.date()))
+                .build();
 
-         updateById(selfGoods);
+        updateById(selfGoods);
         return ResponseResultUtils.getResponseResultS("修改成功");
     }
 

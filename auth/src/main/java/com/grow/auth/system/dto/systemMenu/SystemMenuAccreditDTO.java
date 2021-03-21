@@ -28,5 +28,5 @@ public class SystemMenuAccreditDTO implements Serializable {
 
     @ApiModelProperty(value = "id", example = "0", required = true)
     @NotNull
-    private Long id;
+    private Integer id;
 }

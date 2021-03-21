@@ -43,7 +43,7 @@ public class SelfGoodsStandardServiceImpl extends ServiceImpl<SelfGoodsStandardM
         final String goodsNo = selfGoodsStandardListDTO.getGoodsNo();
         Map<String, Object> data = selfGoodsCheckServer.listSelfGoodsStyle(
                 selfGoodsStandardListDTO.getPage(),
-                selfGoodsStandardListDTO.getLimit(),
+                selfGoodsStandardListDTO.getSize(),
                 goodsNo,
                 this
         );

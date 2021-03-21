@@ -29,7 +29,6 @@ public class SystemRoleTest {
     public void addSystemRole(){
         SystemRole systemRole = new SystemRole();
         systemRole.setCreateTime(DateUtil.toLocalDateTime(DateUtil.date()));
-        systemRole.setSystemRoleId(IdUtil.simpleUUID());
         systemRole.setSystemRoleLevel(0);
         systemRole.setSystemRoleName("系统管理员");
         systemRoleMapper.insert(systemRole);

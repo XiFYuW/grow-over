@@ -29,8 +29,8 @@ public class SystemRoleMenuTest {
 
         SystemRoleMenu systemRoleMenu = new SystemRoleMenu();
         systemRoleMenu.setCreateTime(DateUtil.toLocalDateTime(DateUtil.date()));
-        systemRoleMenu.setSystemMenuId("1945a634cdf949a49a6e230dbd5c2a48");
-        systemRoleMenu.setSystemRoleId("f4e0303f90344b49b9f9b7cf0bfb552b");
+        systemRoleMenu.setSystemMenuId(1);
+        systemRoleMenu.setSystemRoleId(1);
         systemRoleMenuMapper.insert(systemRoleMenu);
     }
 }

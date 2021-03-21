@@ -15,6 +15,8 @@ public interface ISystemMenuService extends IService<SystemMenu> {
 
     ResponseResult list(SystemMenuListDTO systemMenuListDTO);
 
+    ResponseResult childrenList(SystemMenuChildrenListDTO systemMenuChildrenListDTO);
+
     ResponseResult add(SystemMenuAddDTO systemMenuAddDTO);
 
     ResponseResult update(SystemMenuUpdateDTO systemMenuUpdateDTO);
@@ -24,4 +26,6 @@ public interface ISystemMenuService extends IService<SystemMenu> {
     ResponseResult selectTreeData(SystemMenuSelectTreeDataDTO systemMenuSelectTreeDataDTO);
 
     ResponseResult accredit(SystemMenuAccreditDTO systemMenuAccreditDTO);
+
+    ResponseResult structure();
 }

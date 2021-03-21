@@ -2,7 +2,7 @@ package com.grow.pay.connce;
 
 import com.grow.pay.ali.TradeStatusEnum;
 import com.grow.pay.ali.context.AliQueryContext;
-import com.grow.pay.connce.store.ConsequenceMapper;
+import com.grow.pay.connce.store.ConsequencePayMapper;
 import com.grow.pay.connce.store.ConsequencePay;
 import com.grow.pay.inter.Context;
 import com.grow.pay.wx.TradeStateEnum;
@@ -24,14 +24,14 @@ public enum ConsequenceQueryEnum {
         String outTradeNo = String.valueOf(map.get("out_trade_no"));
         TradeStatusEnum tradeStatusEnum = TradeStatusEnum.valueOf(tradeStatus);
 
-        ConsequenceMapper consequenceMapper = SpringContextUtil.getBean(ConsequenceMapper.class);
-        ConsequencePay consequencePay = consequenceMapper.selectByOrderNo(outTradeNo);
+        ConsequencePayMapper consequencePayMapper = SpringContextUtil.getBean(ConsequencePayMapper.class);
+        ConsequencePay consequencePay = consequencePayMapper.selectByOrderNo(outTradeNo);
 
         if (consequencePay.getIsPerform() == 0) {
             Map<String, Object> map1 = new HashMap<>();
             map1.put("orderNo", outTradeNo);
             map1.put("aliOrderStatus", tradeStatusEnum.getCode());
-            consequenceMapper.updateStatus(map1);
+            consequencePayMapper.updateStatus(map1);
         }
     }),
 
@@ -40,14 +40,14 @@ public enum ConsequenceQueryEnum {
         String outTradeNo = resp.get("out_trade_no");
         TradeStateEnum tradeStateEnum = TradeStateEnum.valueOf(tradeState);
 
-        ConsequenceMapper consequenceMapper = SpringContextUtil.getBean(ConsequenceMapper.class);
-        ConsequencePay consequencePay = consequenceMapper.selectByOrderNo(outTradeNo);
+        ConsequencePayMapper consequencePayMapper = SpringContextUtil.getBean(ConsequencePayMapper.class);
+        ConsequencePay consequencePay = consequencePayMapper.selectByOrderNo(outTradeNo);
 
         if (consequencePay.getIsPerform() == 0) {
             Map<String, Object> map1 = new HashMap<>();
             map1.put("orderNo", outTradeNo);
             map1.put("wxOrderStatus", tradeStateEnum.getCode());
-            consequenceMapper.updateStatus(map1);
+            consequencePayMapper.updateStatus(map1);
         }
     })
     ;

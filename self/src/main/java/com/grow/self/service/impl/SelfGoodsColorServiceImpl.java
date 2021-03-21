@@ -43,7 +43,7 @@ public class SelfGoodsColorServiceImpl extends ServiceImpl<SelfGoodsColorMapper,
         final String goodsNo = selfGoodsColorListDTO.getGoodsNo();
         Map<String, Object> data = selfGoodsCheckServer.listSelfGoodsStyle(
                 selfGoodsColorListDTO.getPage(),
-                selfGoodsColorListDTO.getLimit(),
+                selfGoodsColorListDTO.getSize(),
                 goodsNo,
                 this
         );
