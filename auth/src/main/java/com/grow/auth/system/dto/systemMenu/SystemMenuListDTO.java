@@ -1,6 +1,6 @@
 package com.grow.auth.system.dto.systemMenu;
 
-import com.grow.common.dto.BaseDTO;
+import com.grow.common.base.BaseDTO;
 import io.swagger.annotations.ApiModel;
 
 import java.io.Serializable;

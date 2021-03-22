@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 系统菜单
  *
@@ -44,10 +46,16 @@ public class SystemMenuController {
 
     @ApiOperation(value="系统菜单新增")
     @PostMapping(value = "/add")
-    @Validated
     @LogOutAnnotation(url = "/systemMenu/add")
-    public ResponseResult systemMenuAdd(@Validated @RequestBody SystemMenuAddDTO systemMenuAddDTO){
+    public ResponseResult systemMenuAdd(@RequestBody SystemMenuAddDTO systemMenuAddDTO){
         return iSystemMenuService.add(systemMenuAddDTO);
+    }
+
+    @ApiOperation(value="查询菜单:根据ID获取同级与上级数据")
+    @PostMapping(value = "/superior")
+    @LogOutAnnotation(url = "/systemMenu/superior")
+    public ResponseResult superior(@RequestBody List<Long> ids){
+        return iSystemMenuService.superior(ids);
     }
 
     @ApiOperation(value="系统菜单修改")

@@ -1,5 +1,6 @@
 package com.grow.auth.system.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
@@ -11,6 +12,7 @@ import com.grow.auth.system.entity.SystemRoleUser;
 import com.grow.auth.system.mapper.SystemMenuMapper;
 import com.grow.auth.system.service.ISystemMenuService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.grow.auth.system.struct.SystemMenuStruct;
 import com.grow.auth.system.vo.SystemMenuMetaVO;
 import com.grow.auth.system.vo.SystemMenuSelectTreeDataVO;
 import com.grow.auth.system.vo.SystemMenuVO;
@@ -41,23 +43,24 @@ import java.util.stream.Collectors;
 public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemMenu> implements ISystemMenuService {
 
     private final UserExecuteService userExecuteService;
-
     private final JwtPermissionService jwtPermissionService;
-
     private final SystemMenuMapper systemMenuMapper;
+    private final SystemMenuStruct systemMenuStruct;
 
     public SystemMenuServiceImpl(UserExecuteService userExecuteService,
                                  JwtPermissionService jwtPermissionService,
-                                 SystemMenuMapper systemMenuMapper) {
+                                 SystemMenuMapper systemMenuMapper,
+                                 SystemMenuStruct systemMenuStruct) {
         this.userExecuteService = userExecuteService;
         this.jwtPermissionService = jwtPermissionService;
         this.systemMenuMapper = systemMenuMapper;
+        this.systemMenuStruct = systemMenuStruct;
     }
 
     @Override
     @Transactional(readOnly = true)
     public ResponseResult list(SystemMenuListDTO systemMenuListDTO) {
-        final Map<String, Object> data = PageUtils.getDateMap(() ->
+        final Map<String, Object> data = PageUtils.getDateMapBack(() ->
                 systemMenuMapper.selectPage(
                         PageUtils.getPage(
                                 systemMenuListDTO.getPage(),
@@ -67,7 +70,8 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
                                 .eq(SystemMenu::getSystemMenuPid, 0)
                                 .eq(SystemMenu::getIsDel, 0)
                                 .orderByAsc(SystemMenu::getSystemMenuSort)
-                )
+                ),
+                page -> systemMenuStruct.toSuperiorVoList(page.getRecords())
         );
         return ResponseResultUtils.getResponseResultS("查询成功", data);
     }
@@ -79,7 +83,7 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
                 .eq(SystemMenu::getSystemMenuPid, systemMenuChildrenListDTO.getPid())
                 .eq(SystemMenu::getIsDel, 0)
                 .orderByAsc(SystemMenu::getSystemMenuSort));
-        return ResponseResultUtils.getResponseResultS("查询成功", data);
+        return ResponseResultUtils.getResponseResultS("查询成功", systemMenuStruct.toSuperiorVoList(data));
     }
 
     @Override
@@ -122,6 +126,36 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
         // 更新父节点菜单数目
         updateSubCnt(systemMenuAddDTO.getPid());
         return ResponseResultUtils.getResponseResultS("添加成功");
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ResponseResult superior(List<Long> ids) {
+        Set<SystemMenu> systemMenuSet = new LinkedHashSet<>();
+        if(CollectionUtil.isNotEmpty(ids)){
+            for (Long id : ids) {
+                SystemMenu systemMenu = this.getBaseMapper().selectById(id);
+                systemMenuSet.addAll(getSuperiorChildren(systemMenu, new ArrayList<>()));
+            }
+            return ResponseResultUtils.getResponseResultDataS(systemMenuStruct.toSuperiorVoList(this.buildTree(new ArrayList<>(systemMenuSet))));
+        }
+        SystemMenuChildrenListDTO systemMenuChildrenListDTO = new SystemMenuChildrenListDTO(0);
+        return this.childrenList(systemMenuChildrenListDTO);
+    }
+
+    private List<SystemMenu> getSuperiorChildren(SystemMenu systemMenu, List<SystemMenu> menus) {
+        if(systemMenu.getSystemMenuPid() == 0){
+            menus.addAll(this.getBaseMapper().selectList(new LambdaQueryWrapper<SystemMenu>()
+                    .eq(SystemMenu::getIsDel, 0)
+                    .eq(SystemMenu::getSystemMenuPid, 0)
+            ));
+            return menus;
+        }
+        menus.addAll(this.getBaseMapper().selectList(new LambdaQueryWrapper<SystemMenu>()
+                .eq(SystemMenu::getIsDel, 0)
+                .eq(SystemMenu::getSystemMenuPid, systemMenu.getSystemMenuPid())
+        ));
+        return getSuperiorChildren(this.getBaseMapper().selectById(systemMenu.getSystemMenuPid()), menus);
     }
 
     @Override
@@ -239,7 +273,6 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
         });
         return list;
     }
-
 
     public List<SystemMenu> buildTree(List<SystemMenu> menus) {
         List<SystemMenu> trees = new ArrayList<>();

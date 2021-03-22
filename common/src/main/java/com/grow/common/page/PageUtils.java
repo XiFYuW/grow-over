@@ -1,6 +1,5 @@
 package com.grow.common.page;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import java.util.HashMap;
@@ -9,7 +8,7 @@ import java.util.Map;
 
 /**
  * @author XiFYuW
- * @date 2020/08/29 17:11
+ * @since  2020/08/29 17:11
  */
 public class PageUtils {
 
@@ -20,19 +19,17 @@ public class PageUtils {
         return page;
     }
 
-    public static <T> IPage<T> getIPage(IPage<T> page, long current, long size){
-        page.setCurrent(current);
-        page.setSize(size);
-        return page;
-    }
-
-
     public static <T> Map<String, Object> getDateMap(PageContext<T> pageContext){
         Page<T> page = pageContext.buildData();
         Map<String, Object> data = new HashMap<>();
         data.put("total", page.getTotal());
         data.put("rows", page.getRecords());
         return data;
+    }
+
+    public static <T> ResultData<T> getDateResultData(PageContext<T> pageContext){
+        Page<T> page = pageContext.buildData();
+        return new ResultData<T>(page.getTotal(), page.getRecords());
     }
 
     public static <T> Map<String, Object> getDateMapBack(PageContext<T> pageContext, PageContextBack<T> pageContextBack){
@@ -47,4 +44,5 @@ public class PageUtils {
         Page<T> page = pageContext.buildData();
         return page.getRecords();
     }
+
 }

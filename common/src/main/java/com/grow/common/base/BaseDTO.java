@@ -1,4 +1,4 @@
-package com.grow.common.dto;
+package com.grow.common.base;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;

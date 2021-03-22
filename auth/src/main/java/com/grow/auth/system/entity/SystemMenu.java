@@ -81,16 +81,4 @@ public class SystemMenu implements Serializable {
 
     @TableField(exist = false)
     private List<SystemMenu> children;
-
-    public Boolean getHasChildren() {
-        return subCount > 0;
-    }
-
-    public Boolean getLeaf() {
-        return subCount <= 0;
-    }
-
-    public String getLabel() {
-        return systemMenuName;
-    }
 }
