@@ -1,4 +1,4 @@
-package com.grow.auth.system.vo;
+package com.grow.auth.system.vo.systemMenu;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,7 +6,7 @@ import lombok.Data;
 import java.io.Serializable;
 @Data
 @AllArgsConstructor
-public class SystemMenuMetaVO implements Serializable {
+public class BuildSystemMenuMetaVO implements Serializable {
     private String title;
 
     private String icon;

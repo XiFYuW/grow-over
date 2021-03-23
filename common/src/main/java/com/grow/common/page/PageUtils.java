@@ -29,7 +29,7 @@ public class PageUtils {
 
     public static <T> ResultData<T> getDateResultData(PageContext<T> pageContext){
         Page<T> page = pageContext.buildData();
-        return new ResultData<T>(page.getTotal(), page.getRecords());
+        return new ResultData<>(page.getTotal(), page.getRecords());
     }
 
     public static <T> Map<String, Object> getDateMapBack(PageContext<T> pageContext, PageContextBack<T> pageContextBack){
@@ -38,6 +38,11 @@ public class PageUtils {
         data.put("total", page.getTotal());
         data.put("rows", pageContextBack.buildDataBack(page));
         return data;
+    }
+
+    public static <T, S> ResultData<S> getDateResultDataBack(PageContext<T> pageContext, PageContextResultDataBack<T, S> pageContextResultDataBack){
+        Page<T> page = pageContext.buildData();
+        return new ResultData<>(page.getTotal(), pageContextResultDataBack.buildResultDataBack(page));
     }
 
     public static <T> List<T> getDateMapByRecords(PageContext<T> pageContext){

@@ -2,12 +2,14 @@ package com.grow.common.page;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
+import java.util.List;
+
 /**
  * @author XiFYuW
  * @since  2020/08/31 9:01
  */
 
-public interface PageContextBack<T> {
+public interface PageContextResultDataBack<T, S> {
 
-    Object buildDataBack(Page<T> page);
+    List<S> buildResultDataBack(Page<T> page);
 }

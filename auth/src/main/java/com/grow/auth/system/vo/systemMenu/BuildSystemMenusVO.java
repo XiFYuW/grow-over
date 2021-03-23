@@ -1,4 +1,4 @@
-package com.grow.auth.system.vo;
+package com.grow.auth.system.vo.systemMenu;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class SystemMenuVO implements Serializable {
+public class BuildSystemMenusVO implements Serializable {
     private String name;
 
     private String path;
@@ -21,7 +21,7 @@ public class SystemMenuVO implements Serializable {
 
     private Boolean alwaysShow;
 
-    private SystemMenuMetaVO meta;
+    private BuildSystemMenuMetaVO meta;
 
-    private List<SystemMenuVO> children;
+    private List<BuildSystemMenusVO> children;
 }

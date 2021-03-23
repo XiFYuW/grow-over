@@ -1,7 +1,7 @@
 package com.grow.auth.system.struct;
 
 import com.grow.auth.system.entity.SystemMenu;
-import com.grow.auth.system.vo.systemMenu.SuperiorVo;
+import com.grow.auth.system.vo.systemMenu.SystemMenuVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -24,7 +24,7 @@ public interface SystemMenuStruct {
             @Mapping(source = "systemComponentName", target = "componentName"),
             @Mapping(source = "systemPic", target = "icon"),
     })
-    SuperiorVo toSuperiorVo(SystemMenu systemMenu);
+    SystemMenuVo toSystemMenuVo(SystemMenu systemMenu);
 
-    List<SuperiorVo> toSuperiorVoList(List<SystemMenu> systemMenu);
+    List<SystemMenuVo> toSystemMenuVoList(List<SystemMenu> systemMenu);
 }

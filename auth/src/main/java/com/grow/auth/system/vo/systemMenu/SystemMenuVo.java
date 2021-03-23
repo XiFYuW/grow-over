@@ -7,10 +7,10 @@ import java.util.List;
 
 @Getter
 @Setter
-public class SuperiorVo {
+public class SystemMenuVo {
     private Integer id;
 
-    private List<SuperiorVo> children;
+    private List<SystemMenuVo> children;
 
     private Integer type;
 

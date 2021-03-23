@@ -68,7 +68,6 @@ public class SystemMenuController {
 
     @ApiOperation(value="系统菜单删除")
     @PostMapping(value = "/delete")
-    @Validated
     @LogOutAnnotation(url = "/systemMenu/delete")
     public ResponseResult systemMenuDelete(@Validated SystemMenuDeleteDTO systemMenuDeleteDTO){
         return iSystemMenuService.delete(systemMenuDeleteDTO);
@@ -76,7 +75,6 @@ public class SystemMenuController {
 
     @ApiOperation(value="系统菜单下拉列表树")
     @PostMapping(value = "/selectTreeData")
-    @Validated
     @LogOutAnnotation(url = "/systemMenu/selectTreeData")
     public ResponseResult systemMenuSelectTreeData(@Validated SystemMenuSelectTreeDataDTO systemMenuSelectTreeDataDTO){
         return iSystemMenuService.selectTreeData(systemMenuSelectTreeDataDTO);

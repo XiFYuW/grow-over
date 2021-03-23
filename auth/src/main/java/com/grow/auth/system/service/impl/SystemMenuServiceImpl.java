@@ -13,14 +13,16 @@ import com.grow.auth.system.mapper.SystemMenuMapper;
 import com.grow.auth.system.service.ISystemMenuService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.grow.auth.system.struct.SystemMenuStruct;
-import com.grow.auth.system.vo.SystemMenuMetaVO;
+import com.grow.auth.system.vo.systemMenu.BuildSystemMenuMetaVO;
 import com.grow.auth.system.vo.SystemMenuSelectTreeDataVO;
-import com.grow.auth.system.vo.SystemMenuVO;
+import com.grow.auth.system.vo.systemMenu.BuildSystemMenusVO;
+import com.grow.auth.system.vo.systemMenu.SystemMenuVo;
 import com.grow.auth.user.entity.UserInfoSecurity;
 import com.grow.auth.user.service.UserExecuteService;
 import com.grow.common.exception.BaseRuntimeErrHintException;
 import com.grow.common.exception.BaseRuntimeException;
 import com.grow.common.page.PageUtils;
+import com.grow.common.page.ResultData;
 import com.grow.common.result.ResponseResult;
 import com.grow.common.result.ResponseResultUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -60,20 +62,33 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
     @Override
     @Transactional(readOnly = true)
     public ResponseResult list(SystemMenuListDTO systemMenuListDTO) {
-        final Map<String, Object> data = PageUtils.getDateMapBack(() ->
-                systemMenuMapper.selectPage(
-                        PageUtils.getPage(
-                                systemMenuListDTO.getPage(),
-                                systemMenuListDTO.getSize()
+//        final Map<String, Object> data = PageUtils.getDateMapBack(() ->
+//                systemMenuMapper.selectPage(
+//                        PageUtils.getPage(
+//                                systemMenuListDTO.getPage(),
+//                                systemMenuListDTO.getSize()
+//                        ),
+//                        new LambdaQueryWrapper<SystemMenu>()
+//                                .eq(SystemMenu::getSystemMenuPid, 0)
+//                                .eq(SystemMenu::getIsDel, 0)
+//                                .orderByAsc(SystemMenu::getSystemMenuSort)
+//                ),
+//                page -> systemMenuStruct.toSystemMenuVoList(page.getRecords())
+//        );
+        final ResultData<SystemMenuVo> data1 = PageUtils.getDateResultDataBack(() ->
+                        systemMenuMapper.selectPage(
+                                PageUtils.getPage(
+                                        systemMenuListDTO.getPage(),
+                                        systemMenuListDTO.getSize()
+                                ),
+                                new LambdaQueryWrapper<SystemMenu>()
+                                        .eq(SystemMenu::getSystemMenuPid, 0)
+                                        .eq(SystemMenu::getIsDel, 0)
+                                        .orderByAsc(SystemMenu::getSystemMenuSort)
                         ),
-                        new LambdaQueryWrapper<SystemMenu>()
-                                .eq(SystemMenu::getSystemMenuPid, 0)
-                                .eq(SystemMenu::getIsDel, 0)
-                                .orderByAsc(SystemMenu::getSystemMenuSort)
-                ),
-                page -> systemMenuStruct.toSuperiorVoList(page.getRecords())
+                page -> systemMenuStruct.toSystemMenuVoList(page.getRecords())
         );
-        return ResponseResultUtils.getResponseResultS("查询成功", data);
+        return ResponseResultUtils.getResponseResultS("查询成功", data1);
     }
 
     @Override
@@ -83,7 +98,7 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
                 .eq(SystemMenu::getSystemMenuPid, systemMenuChildrenListDTO.getPid())
                 .eq(SystemMenu::getIsDel, 0)
                 .orderByAsc(SystemMenu::getSystemMenuSort));
-        return ResponseResultUtils.getResponseResultS("查询成功", systemMenuStruct.toSuperiorVoList(data));
+        return ResponseResultUtils.getResponseResultS("查询成功", systemMenuStruct.toSystemMenuVoList(data));
     }
 
     @Override
@@ -137,7 +152,7 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
                 SystemMenu systemMenu = this.getBaseMapper().selectById(id);
                 systemMenuSet.addAll(getSuperiorChildren(systemMenu, new ArrayList<>()));
             }
-            return ResponseResultUtils.getResponseResultDataS(systemMenuStruct.toSuperiorVoList(this.buildTree(new ArrayList<>(systemMenuSet))));
+            return ResponseResultUtils.getResponseResultDataS(systemMenuStruct.toSystemMenuVoList(this.buildTree(new ArrayList<>(systemMenuSet))));
         }
         SystemMenuChildrenListDTO systemMenuChildrenListDTO = new SystemMenuChildrenListDTO(0);
         return this.childrenList(systemMenuChildrenListDTO);
@@ -222,16 +237,16 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
                 .filter(x -> Optional.ofNullable(x).isPresent())
                 .collect(Collectors.toList());
         List<SystemMenu> systemMenuTrees = buildTree(menus);
-        List<SystemMenuVO> systemMenuVOList = buildMenus(systemMenuTrees);
-        return ResponseResultUtils.getResponseResultS("查询成功", systemMenuVOList);
+        List<BuildSystemMenusVO> buildSystemMenusVOList = buildMenus(systemMenuTrees);
+        return ResponseResultUtils.getResponseResultS("查询成功", buildSystemMenusVOList);
     }
 
-    public List<SystemMenuVO> buildMenus(List<SystemMenu> menuDtos) {
-        List<SystemMenuVO> list = new LinkedList<>();
+    public List<BuildSystemMenusVO> buildMenus(List<SystemMenu> menuDtos) {
+        List<BuildSystemMenusVO> list = new LinkedList<>();
         menuDtos.forEach(menuDTO -> {
             if (menuDTO != null) {
                 List<SystemMenu> menuDtoList = menuDTO.getChildren();
-                SystemMenuVO menuVo = new SystemMenuVO();
+                BuildSystemMenusVO menuVo = new BuildSystemMenusVO();
                 menuVo.setName(ObjectUtil.isNotEmpty(menuDTO.getSystemComponentName()) ? menuDTO.getSystemComponentName() : menuDTO.getSystemMenuName());
                 // 一级目录需要加斜杠，不然会报警告
                 menuVo.setPath(menuDTO.getSystemMenuPid() == 0 ? "/" + menuDTO.getSystemPath() : menuDTO.getSystemPath());
@@ -244,14 +259,14 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
                         menuVo.setComponent(menuDTO.getSystemComponent());
                     }
                 }
-                menuVo.setMeta(new SystemMenuMetaVO(menuDTO.getSystemMenuName(), menuDTO.getSystemPic(), !menuDTO.getIsCache()));
+                menuVo.setMeta(new BuildSystemMenuMetaVO(menuDTO.getSystemMenuName(), menuDTO.getSystemPic(), !menuDTO.getIsCache()));
                 if (menuDtoList != null && menuDtoList.size() != 0) {
                     menuVo.setAlwaysShow(true);
                     menuVo.setRedirect("noredirect");
                     menuVo.setChildren(buildMenus(menuDtoList));
                     // 处理是一级菜单并且没有子菜单的情况
                 } else if (menuDTO.getSystemMenuPid() == 0) {
-                    SystemMenuVO menuVo1 = new SystemMenuVO();
+                    BuildSystemMenusVO menuVo1 = new BuildSystemMenusVO();
                     menuVo1.setMeta(menuVo.getMeta());
                     // 非外链
                     if (!menuDTO.getIFrame()) {
@@ -264,7 +279,7 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
                     menuVo.setName(null);
                     menuVo.setMeta(null);
                     menuVo.setComponent("Layout");
-                    List<SystemMenuVO> list1 = new ArrayList<>();
+                    List<BuildSystemMenusVO> list1 = new ArrayList<>();
                     list1.add(menuVo1);
                     menuVo.setChildren(list1);
                 }
